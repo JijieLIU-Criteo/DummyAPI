@@ -33,8 +33,11 @@ namespace DummyAPI
                     options.Filters.Add<JsonExceptionFilter>();
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
+
             services.AddControllers();
+
             services.AddRouting(options => options.LowercaseUrls = true);
+
             services.AddSwaggerDocument(configure =>
             {
                 configure.PostProcess = document =>
@@ -42,6 +45,7 @@ namespace DummyAPI
                     document.Info.Title = "Dummy API";
                 };
             });
+
             services.AddApiVersioning(options =>
             {
                 options.DefaultApiVersion = new ApiVersion(1, 0);
@@ -49,6 +53,13 @@ namespace DummyAPI
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ReportApiVersions = true;
                 options.ApiVersionSelector = new CurrentImplementationApiVersionSelector(options);
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "AllowWebAppFrontend",
+                    policy => policy.AllowAnyOrigin());
             });
         }
 
@@ -61,6 +72,8 @@ namespace DummyAPI
                 app.UseOpenApi();
                 app.UseSwaggerUi3();
             }
+
+            app.UseCors("AllowWebAppFrontend");
 
             app.UseHttpsRedirection();
 
