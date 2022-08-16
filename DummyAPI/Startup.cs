@@ -1,4 +1,5 @@
 using DummyAPI.Filters;
+using DummyAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,8 @@ namespace DummyAPI
             // Use in-memory database
             services.AddDbContext<DummyDbContext>(
                 options => options.UseInMemoryDatabase("dummydb"));
+
+            services.AddScoped<IRoomService, RoomService>();
 
             services
                 .AddMvc(options =>
