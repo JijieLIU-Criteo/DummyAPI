@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DummyAPI.Models;
+using DummyAPI.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace DummyAPI.Controllers
 {
@@ -8,14 +11,25 @@ namespace DummyAPI.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        [HttpGet(Name = nameof(GetRooms))]
-        public IActionResult GetRooms()
+        private readonly IRoomService _roomService;
+
+        public RoomsController(IRoomService roomService)
         {
-            var response = new
-            {
-                href = Url.Link(nameof(GetRooms), null)
-            };
-            return Ok(response);
+            _roomService = roomService;
         }
+
+        [HttpGet("{id}", Name = nameof(GetRoom))]
+        public async Task<ActionResult<Room>> GetRoom(Guid id)
+        {
+            var room = await _roomService.GetRoomAsync(id);
+
+            if (room == null)
+            {
+                return NotFound();
+            }
+
+            return room;
+        }
+
     }
 }
