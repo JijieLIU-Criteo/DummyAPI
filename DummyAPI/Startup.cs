@@ -27,6 +27,9 @@ namespace DummyAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Use in-memory database
+            services.AddDbContext<DummyDbContext>(options => options.UseInMemoryDatabase("dummydb"));
+
             services
                 .AddMvc(options =>
                 {
