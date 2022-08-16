@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,7 +29,8 @@ namespace DummyAPI
         public void ConfigureServices(IServiceCollection services)
         {
             // Use in-memory database
-            services.AddDbContext<DummyDbContext>(options => options.UseInMemoryDatabase("dummydb"));
+            services.AddDbContext<DummyDbContext>(
+                options => options.UseInMemoryDatabase("dummydb"));
 
             services
                 .AddMvc(options =>
