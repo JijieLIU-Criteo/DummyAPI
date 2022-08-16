@@ -8,10 +8,14 @@ namespace DummyAPI.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet(Name = nameof(GetRooms))]
         public IActionResult GetRooms()
         {
-            throw new NotImplementedException();
+            var response = new
+            {
+                href = Url.Link(nameof(GetRooms), null)
+            };
+            return Ok(response);
         }
     }
 }
