@@ -4,7 +4,7 @@ namespace DummyAPI.Models
     public class Room : Resource
     {
         public string Name { get; set; }
-        public int Rate { get; set; }
+        public decimal Rate { get; set; }
     }
 }
 
