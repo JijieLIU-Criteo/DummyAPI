@@ -1,4 +1,5 @@
 using DummyAPI.Filters;
+using DummyAPI.Infrastructure;
 using DummyAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,6 +62,11 @@ namespace DummyAPI
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ReportApiVersions = true;
                 options.ApiVersionSelector = new CurrentImplementationApiVersionSelector(options);
+            });
+
+            services.AddAutoMapper(options =>
+            {
+                options.AddProfile<MappingProfile>();
             });
 
             services.AddCors(options =>

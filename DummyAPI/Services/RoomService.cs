@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DummyAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +10,12 @@ namespace DummyAPI.Services
     public class RoomService : IRoomService
     {
         private readonly DummyDbContext _context;
+        private readonly IMapper _mapper;
 
-        public RoomService(DummyDbContext context)
+        public RoomService(DummyDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         #nullable enable
@@ -26,12 +29,7 @@ namespace DummyAPI.Services
                 return null;
             }
 
-            return new Room
-            {
-                Href = null,
-                Name = entity.Name,
-                Rate = entity.Rate / 100.0m
-            };
+            return _mapper.Map<Room>(entity);
         }
     }
 }
