@@ -2,7 +2,7 @@
 
 namespace DummyAPI.Models
 {
-    public class Hotel : Resource
+    public class Hotel
     {
         public string Title { get; set; }
         public string Description { get; set; }

@@ -66,7 +66,7 @@ namespace DummyAPI
 
             services.AddAutoMapper(options =>
             {
-                options.AddProfile<MappingProfile>();
+                options.AddProfile<RoomMappingProfile>();
             });
 
             services.AddCors(options =>
