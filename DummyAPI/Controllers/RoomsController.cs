@@ -3,6 +3,7 @@ using DummyAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DummyAPI.Controllers
@@ -18,8 +19,22 @@ namespace DummyAPI.Controllers
             _roomService = roomService;
         }
 
-        [HttpGet("{id}", Name = nameof(GetRoom))]
-        public async Task<ActionResult<Room>> GetRoom(Guid id)
+        [HttpGet]
+        public async Task<ActionResult<Collection<Room>>> GetRooms()
+        {
+            var rooms = await _roomService.GetRoomsAsync();
+
+            var collection = new Collection<Room>
+            {
+                Values = rooms.ToList()
+            };
+
+            return collection;
+        }
+
+        #nullable enable
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Room?>> GetRoom(Guid id)
         {
             var room = await _roomService.GetRoomAsync(id);
 
